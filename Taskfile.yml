@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+
+version: '3'
+
+tasks:
+  default:
+    desc: Lists all the available Tasks
+    cmds:
+      - go-task --list
+    silent: true
+
+  push-journal:
+    desc: A lazy way to push my journal commits
+    dir: '{{.ROOT_DIR}}/'
+    cmds:
+      - git add JOURNAL.md
+      - |
+        printf "Enter your reflection message alone: ";
+        read -r message;
+        git commit -m "journal: ${message} [$(date +'%Y-%B-%d • %H:%M')]"
+        git push origin main
